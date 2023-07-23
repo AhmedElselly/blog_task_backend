@@ -14,6 +14,10 @@ export const postSchema = new Schema(
       data: Buffer,
       contentType: String,
     },
+    author: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User'
+    }
   },
   {
     timestamps: true,

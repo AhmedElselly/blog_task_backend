@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface PostInterface extends Document {
     title: string;
@@ -6,5 +6,6 @@ export interface PostInterface extends Document {
     image: {
         data: Buffer,
         contentType: string
-    }
+    },
+    author: Types.ObjectId
 }

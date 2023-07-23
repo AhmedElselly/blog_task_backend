@@ -11,8 +11,10 @@ export class PostsService {
   async create(
     createPostDto: CreatePostDto,
     file: Express.Multer.File,
+    req: any
   ): Promise<any> {
     const post = new this.post(createPostDto);
+    post.author = req.user;
     if (file) {
       post.image.data = file.buffer;
       post.image.contentType = file.mimetype;
@@ -22,12 +24,12 @@ export class PostsService {
   }
 
   async findAll(): Promise<any> {
-    const posts = await this.post.find();
+    const posts = await this.post.find().select('-image');
     return posts;
   }
 
   async findOne(id: string): Promise<any> {
-    const post = await this.post.findById(id);
+    const post = await this.post.findById(id).select('-image');
     return post;
   }
 
@@ -44,7 +46,7 @@ export class PostsService {
   }
 
   async remove(id: string): Promise<any> {
-    const post = await this.post.findById(id);
+    const post = await this.post.findById(id).select('-image');
     await post.deleteOne();
     return { message: 'Post is removed successfully!' };
   }
