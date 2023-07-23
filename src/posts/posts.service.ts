@@ -24,12 +24,12 @@ export class PostsService {
   }
 
   async findAll(): Promise<any> {
-    const posts = await this.post.find().select('-image');
+    const posts = await this.post.find().populate('author').select('-image');
     return posts;
   }
 
   async findOne(id: string): Promise<any> {
-    const post = await this.post.findById(id).select('-image');
+    const post = await this.post.findById(id).populate('author').select('-image');
     return post;
   }
 
